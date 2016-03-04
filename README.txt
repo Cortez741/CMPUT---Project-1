@@ -10,5 +10,5 @@ Plan:
 10. Test the fuck out of this shit
 
 ChangeLog:
-2016-03-03 - Created this readme.
-2016-03-03 - Created two python files for NVR and AT.
+2016-03-03 - (Victor) Created this readme.
+2016-03-03 - (victor) Created two python files for NVR and AT.
