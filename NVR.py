@@ -12,7 +12,7 @@
 
 #---Interface----------------------------------------------------------------------------------------------------------#
 # Input: serial_no, maker, model, year, color, type_id, owner_id, is_primary_owner
-# Ouput: CSV text (STR) to send back to the front end.
+# Ouput: RESULT CODE
 
 #---Function Start-----------------------------------------------------------------------------------------------------#
 def NVR(serial_no, maker, model, year, color, type_id, owner_id, is_primary_owner):
