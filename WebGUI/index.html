@@ -23,8 +23,52 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" href="bower_components/paper-styles/typography.html">
     <link rel="import" href="x-card.html">
     <link rel="import" href="x-cards-list.html">
+    <link rel="import" href="bower_components/iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="bower_components/iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="bower_components/paper-button/paper-button.html">
+    <link rel="import" href="bower_components/paper-checkbox/paper-checkbox.html">
+    <link rel="import" href="bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+    <link rel="import" href="bower_components/paper-input/paper-input.html">
+    <link rel="import" href="bower_components/paper-item/paper-item.html">
+    <link rel="import" href="bower_components/paper-menu/paper-menu.html">
+    <link rel="import" href="bower_components/paper-spinner/paper-spinner.html">
+    <link rel="import" href="bower_components/paper-styles/color.html">
+    <link rel="import" href="bower_components/paper-styles/typography.html">
+    <link rel="import" href="bower_components/iron-form/iron-form.html">
+    <link rel="import" href="simple-element.html">
 
-  <style is="custom-style">
+    <style is="custom-style" include="demo-pages-shared-styles">
+    .output {
+      margin-top: 20px;
+      word-wrap: break-word;
+      @apply(--paper-font-common-code);
+    }
+    form > paper-button {
+      width: 45%;
+      margin-top: 20px;
+    }
+    form > paper-button:not([disabled]) {
+      background: var(--paper-light-blue-500);
+      color: white;
+    }
+    button {
+      margin-top: 20px;
+    }
+    paper-spinner {
+      width: 14px;
+      height: 14px;
+      margin-right: 20px;
+    }
+    paper-dropdown-menu {
+      display: block;
+    }
+    demo-snippet {
+      --demo-snippet-code: {
+        max-height: 300px;
+      };
+    }
+    </style>
+    <style is="custom-style">
       body {
         padding: 15px;
         @apply(--layout-fullbleed);
@@ -110,6 +154,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
                 proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
               </p>
+              <div class="vertical-section-container centered">
+                <form is="iron-form" method="get" action="/" id="basic">
+                 <paper-input name="name" label="Name" required></paper-input>
+                 <br>
+                 <paper-checkbox name="food" value="cheese" required>I like cheese</paper-checkbox><br><br>
+                 <paper-checkbox name="food" value="cheese" required>I like cheese</paper-checkbox><br><br>
+                 <paper-checkbox name="food" value="cheese" required>I like cheese</paper-checkbox><br><br>
+                 <paper-checkbox name="food" value="cheese" required>I like cheese</paper-checkbox><br><br>
+                 <paper-dropdown-menu label="Cars" name="cars" required>
+                   <paper-menu class="dropdown-content">
+                     <paper-item value="volvo">Volvo</paper-item>
+                     <paper-item value="saab">Saab</paper-item>
+                     <paper-item value="fiat">Fiat</paper-item>
+                     <paper-item value="audi">Audi</paper-item>
+                   </paper-menu>
+                 </paper-dropdown-menu>
+                 <paper-button raised onclick="_submit(event)">Submit</paper-button>
+                 <paper-button raised onclick="_reset(event)">Reset</paper-button>
+                 <div class="output"></div>
+                </form>
+                <script>
+                 function _submit(event) {
+                   Polymer.dom(event).localTarget.parentElement.submit();
+                 }
+                 function _reset(event) {
+                   var form = Polymer.dom(event).localTarget.parentElement
+                   form.reset();
+                   form.querySelector('.output').innerHTML = '';
+                 }
+                 basic.addEventListener('iron-form-submit', function(event) {
+                   this.querySelector('.output').innerHTML = JSON.stringify(event.detail);
+                 });
+                </script>
+
+            </div>
             </div>
           </x-card>
 
