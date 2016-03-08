@@ -5,7 +5,12 @@
 import cgitb
 cgitb.enable()
 
-print "Content-Type: text/plain;charset=utf-8"
+print "Content-type: text/html"
 print
-
-print "Hello World!"
+print '''<html>
+<head>
+</head>
+</body>
+Weeee
+<body>
+</html>'''

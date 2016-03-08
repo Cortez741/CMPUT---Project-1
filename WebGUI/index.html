@@ -20,42 +20,130 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
     <link rel="import" href="bower_components/neon-animation/neon-animated-pages.html">
     <link rel="import" href="bower_components/neon-animation/neon-animations.html">
-    <link rel="import" href="bower_components/paper-styles/color.html">
-    <link rel="import" href="circles-page.html">
-    <link rel="import" href="squares-page.html">
+    <link rel="import" href="bower_components/paper-styles/typography.html">
+    <link rel="import" href="x-card.html">
+    <link rel="import" href="x-cards-list.html">
 
-    <style is="custom-style">
+  <style is="custom-style">
       body {
-        overflow: hidden;
+        padding: 15px;
         @apply(--layout-fullbleed);
+        @apply(--paper-font-common-base);
       }
       neon-animated-pages {
         height: 100%;
       }
-      :root {
-        --color-one: var(--paper-cyan-300);
-        --color-two: var(--paper-orange-500);
+      .large {
+        width: 100%
+      }
+      .button {
+        text-align: center;
+        width: 120px;
+        height: 32px;
+        line-height: 32px;
+        border-radius: 2px;
+        font-size: 0.9em;
+        background-color: #fff;
+        color: #646464;
+      }
+      .button.blue {
+        background-color: #4285f4;
+        color: #fff;
+      }
+      .button.raised {
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+      }
+      .button.back {
+        position: fixed;
+        top: 30px;
+        left: 30px;
+      }
+      .card-contents {
+        @apply(--layout-vertical);
+        @apply(--layout-center-center);
+        @apply(--layout-fit);
+      }
+      .button-container {
+        @apply(--layout-flex);
+        @apply(--layout-horizontal);
+        @apply(--layout-around-justified);
       }
     </style>
+
 
   </head>
   <body>
 
-    <template is="dom-bind">
-
+     <template is="dom-bind">
       <neon-animated-pages id="pages" selected="0">
-        <circles-page on-circle-click="_onCircleClick"></circles-page>
-        <squares-page on-click="_onSquaresClick"></squares-page>
-      </neon-animated-pages>
+          <x-cards-list id="list">
+            <div class="card-contents">
+              <h2>Choose a subject</h2>
+              <div class="button-container large">
+                <div class="blue raised button" on-click="_onPolymerClick">
+                  POLYMER
+                </div>
+                <div class="blue raised button" on-click="_onAngularClick">
+                  ANGULAR
+                </div>
+              </div>
+            </div>
+          </x-cards-list>
 
+          <x-card>
+            <div class="card-contents">
+              <div class="raised back button" on-click="_onBackClick">
+                BACK
+              </div>
+              <h2>Polymer</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
+            </div>
+          </x-card>
+
+          <x-card>
+            <div class="card-contents">
+              <div class="raised back button" on-click="_onBackClick">
+                BACK
+              </div>
+              <h2>Angular</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
+            </div>
+          </x-card>
+
+        </neon-animated-pages>
     </template>
 
     <script>
       var scope = document.querySelector('template[is="dom-bind"]');
-      scope._onCircleClick = function(event) {
+      scope._onPolymerClick = function(event) {
+        this.$.list.sharedElements = {
+          'ripple': event.target,
+          'reverse-ripple': event.target
+        };
         this.$.pages.selected = 1;
       };
-      scope._onSquaresClick = function(event) {
+      scope._onAngularClick = function(event) {
+        this.$.list.sharedElements = {
+          'ripple': event.target,
+          'reverse-ripple': event.target
+        };
+        this.$.pages.selected = 2;
+      };
+      scope._onBackClick = function(event) {
         this.$.pages.selected = 0;
       };
     </script>
