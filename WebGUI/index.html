@@ -38,7 +38,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       .button {
         text-align: center;
-        width: 120px;
+        width: 200px;
         height: 32px;
         line-height: 32px;
         border-radius: 2px;
@@ -80,16 +80,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="card-contents">
               <h2>CMPUT 291 - Project 1</h2>
               <div class="button-container large">
-                <div class="blue raised button" on-click="_onPolymerClick">
+                <div class="blue raised button" on-click="_onNewVehicleRegistrationClick">
                   New Vehicle Registration
                 </div>
-                <div class="blue raised button" on-click="_onAngularClick">
+                <div class="blue raised button" on-click="_onAutoTransactionClick">
                   Auto Transaction
                 </div>
-                <div class="blue raised button" on-click="_onAngularClick">
+                <div class="blue raised button" on-click="_onDriverLicenceRegistrationClick">
                   Driver Licence Registration
                 </div>
-                <div class="blue raised button" on-click="_onAngularClick">
+                <div class="blue raised button" on-click="_onViolationRecordClick">
                   Violation Record
                 </div>
               </div>
@@ -169,19 +169,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <script>
       var scope = document.querySelector('template[is="dom-bind"]');
-      scope._onPolymerClick = function(event) {
+      scope._onNewVehicleRegistrationClick = function(event) {
         this.$.list.sharedElements = {
           'ripple': event.target,
           'reverse-ripple': event.target
         };
         this.$.pages.selected = 1;
       };
-      scope._onAngularClick = function(event) {
+      scope._onAutoTransactionClick = function(event) {
         this.$.list.sharedElements = {
           'ripple': event.target,
           'reverse-ripple': event.target
         };
         this.$.pages.selected = 2;
+      };
+      scope._onDriverLicenceRegistrationClick = function(event) {
+        this.$.list.sharedElements = {
+          'ripple': event.target,
+          'reverse-ripple': event.target
+        };
+        this.$.pages.selected = 3;
+      };
+      scope._onViolationRecordClick = function(event) {
+        this.$.list.sharedElements = {
+          'ripple': event.target,
+          'reverse-ripple': event.target
+        };
+        this.$.pages.selected = 4;
       };
       scope._onBackClick = function(event) {
         this.$.pages.selected = 0;
