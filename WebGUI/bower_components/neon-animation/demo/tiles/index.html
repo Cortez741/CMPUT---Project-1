@@ -15,12 +15,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
 
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
-    <link rel="import" href="bower_components/neon-animation/neon-animated-pages.html">
-    <link rel="import" href="bower_components/neon-animation/neon-animations.html">
-    <link rel="import" href="bower_components/paper-styles/color.html">
+    <link rel="import" href="../../../iron-flex-layout/iron-flex-layout.html">
+    <link rel="import" href="../../neon-animated-pages.html">
+    <link rel="import" href="../../neon-animations.html">
+    <link rel="import" href="../../../paper-styles/color.html">
     <link rel="import" href="circles-page.html">
     <link rel="import" href="squares-page.html">
 
@@ -32,6 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       neon-animated-pages {
         height: 100%;
       }
+
       :root {
         --color-one: var(--paper-cyan-300);
         --color-two: var(--paper-orange-500);
@@ -51,13 +52,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
 
     <script>
+
       var scope = document.querySelector('template[is="dom-bind"]');
+
       scope._onCircleClick = function(event) {
         this.$.pages.selected = 1;
       };
+
       scope._onSquaresClick = function(event) {
         this.$.pages.selected = 0;
       };
+
     </script>
 
   </body>
