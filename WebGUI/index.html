@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <html>
-  <head>
+<head>
     <title>neon-animated-pages demo: tiles</title>
 
     <meta charset="utf-8">
@@ -38,36 +38,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" href="simple-element.html">
 
     <style is="custom-style" include="demo-pages-shared-styles">
-    .output {
-      margin-top: 20px;
-      word-wrap: break-word;
-      @apply(--paper-font-common-code);
-    }
-    form > paper-button {
-      width: 45%;
-      margin-top: 20px;
-    }
-    form > paper-button:not([disabled]) {
-      background: var(--paper-light-blue-500);
-      color: white;
-    }
-    button {
-      margin-top: 20px;
-    }
-    paper-spinner {
-      width: 14px;
-      height: 14px;
-      margin-right: 20px;
-    }
-    paper-dropdown-menu {
-      display: block;
-    }
-    demo-snippet {
+        .output {
+          margin-top: 20px;
+          word-wrap: break-word;
+          @apply(--paper-font-common-code);
+        }
+        form > paper-button {
+          width: 45%;
+          margin-top: 20px;
+        }
+        form > paper-button:not([disabled]) {
+          background: var(--paper-light-blue-500);
+          color: white;
+        }
+        button {
+          margin-top: 20px;
+        }
+        paper-spinner {
+          width: 14px;
+          height: 14px;
+          margin-right: 20px;
+        }
+        paper-dropdown-menu {
+          display: block;
+        }
+        demo-snippet {
       --demo-snippet-code: {
         max-height: 300px;
       };
     }
     </style>
+
     <style is="custom-style">
       body {
         padding: 15px;
@@ -113,175 +114,171 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-around-justified);
       }
     </style>
+ </head>
 
+ <body>
 
-  </head>
-  <body>
-
-     <template is="dom-bind">
-      <neon-animated-pages id="pages" selected="0">
-          <x-cards-list id="list">
-            <div class="card-contents">
-              <h2>CMPUT 291 - Project 1</h2>
-              <div class="button-container large">
+<template is="dom-bind">
+<neon-animated-pages id="pages" selected="0">
+    <x-cards-list id="list">
+        <div class="card-contents">
+            <h2>CMPUT 291 - Project 1</h2>
+            <div class="button-container large">
                 <div class="blue raised button" on-click="_onNewVehicleRegistrationClick">
-                  New Vehicle Registration
+                    New Vehicle Registration
                 </div>
                 <div class="blue raised button" on-click="_onAutoTransactionClick">
-                  Auto Transaction
+                    Auto Transaction
                 </div>
                 <div class="blue raised button" on-click="_onDriverLicenceRegistrationClick">
-                  Driver Licence Registration
+                    Driver Licence Registration
                 </div>
                 <div class="blue raised button" on-click="_onViolationRecordClick">
-                  Violation Record
+                    Violation Record
                 </div>
-              </div>
             </div>
-          </x-cards-list>
+        </div>
+    </x-cards-list>
 
-          <x-card>
-            <div class="card-contents">
-              <div class="raised back button" on-click="_onBackClick">
+    <x-card>
+        <div class="card-contents">
+            <div class="raised back button" on-click="_onBackClick">
                 BACK
-              </div>
-              <h2>New Vehicle Registration</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-              <div class="vertical-section-container centered">
+            </div>
+            <h2>New Vehicle Registration</h2>
+            <p>
+                Please enter the information required for a new vehicle. 
+            </p>
+            <div class="vertical-section-container centered">
 
-                <form is="iron-form" method="get" action="/" id="basic">
-                 <paper-input name="name" label="Name" required></paper-input>
-                 <br>
-                 <paper-checkbox name="food" value="cheese" required>I like cheese</paper-checkbox><br><br>
-                 <paper-checkbox name="food" value="cheese" required>I like cheese</paper-checkbox><br><br>
-                 <paper-checkbox name="food" value="cheese" required>I like cheese</paper-checkbox><br><br>
-                 <paper-checkbox name="food" value="cheese" required>I like cheese</paper-checkbox><br><br>
-                 <paper-dropdown-menu label="Cars" name="cars" required>
-                   <paper-menu class="dropdown-content">
-                     <paper-item value="volvo">Volvo</paper-item>
-                     <paper-item value="saab">Saab</paper-item>
-                     <paper-item value="fiat">Fiat</paper-item>
-                     <paper-item value="audi">Audi</paper-item>
-                   </paper-menu>
-                 </paper-dropdown-menu>
-                 <paper-button raised onclick="_submit(event)">Submit</paper-button>
-                 <paper-button raised onclick="_reset(event)">Reset</paper-button>
-                 <div class="output"></div>
+                <form is="iron-form" method="get" action="/" id="basic" style="width: 300px;">
+                     <paper-input name="serial_no" label="Serial Number" required></paper-input>
+
+                     <paper-input name="maker" label="Maker" required></paper-input>
+
+                     <paper-input name="model" label="Model" required></paper-input>
+
+                     <paper-input name="year" label="Year" required></paper-input>
+
+                     <paper-input name="color" label="Color" required></paper-input>
+
+                     <paper-input name="type_id" label="Type" required></paper-input>
+
+                     <paper-input name="owner_id" label="Owner" required></paper-input><br>
+
+                     <paper-checkbox name="is_primary_owner" value="yes" required>Is this owner the primary owner?</paper-checkbox><br><br>
+
+                     <paper-button raised onclick="_submit(event)">Submit</paper-button>
+                     <paper-button raised onclick="_reset(event)">Reset</paper-button>
+                     <div class="output"></div>
                 </form>
+
                 <script>
-                 function _submit(event) {
-                   Polymer.dom(event).localTarget.parentElement.submit();
-                 }
-                 function _reset(event) {
-                   var form = Polymer.dom(event).localTarget.parentElement
-                   form.reset();
-                   form.querySelector('.output').innerHTML = '';
-                 }
-                 basic.addEventListener('iron-form-submit', function(event) {
-                   this.querySelector('.output').innerHTML = JSON.stringify(event.detail);
-                 });
+                    function _submit(event) {
+                    Polymer.dom(event).localTarget.parentElement.submit();
+                    }
+                    function _reset(event) {
+                    var form = Polymer.dom(event).localTarget.parentElement
+                    form.reset();
+                    form.querySelector('.output').innerHTML = '';
+                    }
+                    basic.addEventListener('iron-form-submit', function(event) {
+                    this.querySelector('.output').innerHTML = JSON.stringify(event.detail);
+                    });
                 </script>
 
-
             </div>
-            </div>
-          </x-card>
+        </div>
+    </x-card>
 
-          <x-card>
-            <div class="card-contents">
-              <div class="raised back button" on-click="_onBackClick">
-                BACK
-              </div>
-              <h2>Auto Transaction</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-            </div>
-          </x-card>
+<x-card>
+<div class="card-contents">
+<div class="raised back button" on-click="_onBackClick">
+BACK
+</div>
+<h2>Auto Transaction</h2>
+<p>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+</div>
+</x-card>
 
-          <x-card>
-            <div class="card-contents">
-              <div class="raised back button" on-click="_onBackClick">
-                BACK
-              </div>
-              <h2>Driver Licence Registration</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-            </div>
-          </x-card>
+<x-card>
+<div class="card-contents">
+<div class="raised back button" on-click="_onBackClick">
+BACK
+</div>
+<h2>Driver Licence Registration</h2>
+<p>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+</div>
+</x-card>
 
-          <x-card>
-            <div class="card-contents">
-              <div class="raised back button" on-click="_onBackClick">
-                BACK
-              </div>
-              <h2>Violation Record</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-            </div>
-          </x-card>
+<x-card>
+<div class="card-contents">
+<div class="raised back button" on-click="_onBackClick">
+BACK
+</div>
+<h2>Violation Record</h2>
+<p>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</p>
+</div>
+</x-card>
 
-        </neon-animated-pages>
-    </template>
+</neon-animated-pages>
+</template>
 
-    <script>
-      var scope = document.querySelector('template[is="dom-bind"]');
-      scope._onNewVehicleRegistrationClick = function(event) {
-        this.$.list.sharedElements = {
-          'ripple': event.target,
-          'reverse-ripple': event.target
-        };
-        this.$.pages.selected = 1;
-      };
-      scope._onAutoTransactionClick = function(event) {
-        this.$.list.sharedElements = {
-          'ripple': event.target,
-          'reverse-ripple': event.target
-        };
-        this.$.pages.selected = 2;
-      };
-      scope._onDriverLicenceRegistrationClick = function(event) {
-        this.$.list.sharedElements = {
-          'ripple': event.target,
-          'reverse-ripple': event.target
-        };
-        this.$.pages.selected = 3;
-      };
-      scope._onViolationRecordClick = function(event) {
-        this.$.list.sharedElements = {
-          'ripple': event.target,
-          'reverse-ripple': event.target
-        };
-        this.$.pages.selected = 4;
-      };
-      scope._onBackClick = function(event) {
-        this.$.pages.selected = 0;
-      };
-    </script>
+<script>
+var scope = document.querySelector('template[is="dom-bind"]');
+scope._onNewVehicleRegistrationClick = function(event) {
+this.$.list.sharedElements = {
+'ripple': event.target,
+'reverse-ripple': event.target
+};
+this.$.pages.selected = 1;
+};
+scope._onAutoTransactionClick = function(event) {
+this.$.list.sharedElements = {
+'ripple': event.target,
+'reverse-ripple': event.target
+};
+this.$.pages.selected = 2;
+};
+scope._onDriverLicenceRegistrationClick = function(event) {
+this.$.list.sharedElements = {
+'ripple': event.target,
+'reverse-ripple': event.target
+};
+this.$.pages.selected = 3;
+};
+scope._onViolationRecordClick = function(event) {
+this.$.list.sharedElements = {
+'ripple': event.target,
+'reverse-ripple': event.target
+};
+this.$.pages.selected = 4;
+};
+scope._onBackClick = function(event) {
+this.$.pages.selected = 0;
+};
+</script>
 
-  </body>
+</body>
 </html>
