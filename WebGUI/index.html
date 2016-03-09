@@ -114,59 +114,63 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-around-justified);
       }
     </style>
+
  </head>
 
- <body style="height: 700px;">
+ <body style="height:700px">
     <template is="dom-bind">
         <neon-animated-pages id="pages" selected="0">
 
             <x-cards-list id="list">
                 <div class="card-contents">
-                    <h2>CMPUT 291 - Project 1</h2>
-                    <div class="button-container large">
+                    <h2>CMPUT 291 - Project 1</h2><br><br>
+
                         <div class="blue raised button" on-click="_onNewVehicleRegistrationClick">
                             New Vehicle Registration
-                        </div>
+                        </div><br><br>
                         <div class="blue raised button" on-click="_onAutoTransactionClick">
                             Auto Transaction
-                        </div>
+                        </div><br><br>
                         <div class="blue raised button" on-click="_onDriverLicenceRegistrationClick">
                             Driver Licence Registration
-                        </div>
+                        </div><br><br>
                         <div class="blue raised button" on-click="_onViolationRecordClick">
                             Violation Record
-                        </div>
-                    </div>
+                        </div><br><br>
+
                 </div>
             </x-cards-list>
 
             <x-card>
                 <div class="card-contents">
-                    <div class="raised back button" on-click="_onBackClick">
-                        BACK
+                    <div class="raised back button" on-click="_onBackClick" style="width:50px">
+                        <iron-icon icon="arrow-back"></iron-icon>
                     </div>
+
+                    <div style="height:50px"></div>
                     <h2>New Vehicle Registration</h2>
                     <p>
-                        Please enter the information required for a new vehicle.
+                        Please enter the information required for a new vehicle.<br>
+
                     </p>
                     <div class="vertical-section-container centered">
 
                         <form is="iron-form" method="get" action="/" id="basic" style="width: 300px;">
-                             <paper-input name="serial_no" label="Serial Number" required></paper-input>
+                             <paper-input name="serial_no" label="Serial Number" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
 
-                             <paper-input name="maker" label="Maker" required></paper-input>
+                             <paper-input name="maker" label="Maker" char-counter maxlength="20" required></paper-input>
 
-                             <paper-input name="model" label="Model" required></paper-input>
+                             <paper-input name="model" label="Model" char-counter maxlength="20" required></paper-input>
 
-                             <paper-input name="year" label="Year" required></paper-input>
+                             <paper-input name="year" label="Year" required char-counter maxlength="4" auto-validate pattern="[0-9]*" error-message="please type a date"></paper-input>
 
-                             <paper-input name="color" label="Color" required></paper-input>
+                             <paper-input name="color" label="Color" char-counter maxlength="10" required auto-validate pattern="[a-zA-Z]*" error-message="please only use letters"></paper-input>
 
-                             <paper-input name="type_id" label="Type" required></paper-input>
+                             <paper-input name="type_id" label="Type" required auto-validate pattern="[0-9]*" error-message="please type an integer"></paper-input>
 
-                             <paper-input name="owner_id" label="Owner" required></paper-input><br>
+                             <paper-input name="owner_id" label="Owner ID" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input><br>
 
-                             <paper-checkbox name="is_primary_owner" value="yes" required>Is this owner the primary owner?</paper-checkbox><br><br>
+                             <paper-checkbox name="is_primary_owner" value="yes">Is this owner the primary owner?</paper-checkbox><br><br>
 
                              <paper-button raised onclick="_submit(event)">Submit</paper-button>
                              <paper-button raised onclick="_reset(event)">Reset</paper-button>
@@ -193,8 +197,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <x-card>
                 <div class="card-contents">
-                    <div class="raised back button" on-click="_onBackClick">
-                        BACK
+                    <div class="raised back button" on-click="_onBackClick" style="width:50px">
+                        <iron-icon icon="arrow-back"></iron-icon>
                     </div>
                     <h2>Auto Transaction</h2>
                     <p>
@@ -248,8 +252,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <x-card>
                 <div class="card-contents">
-                    <div class="raised back button" on-click="_onBackClick">
-                        BACK
+                    <div class="raised back button" on-click="_onBackClick" style="width:50px">
+                        <iron-icon icon="arrow-back"></iron-icon>
                     </div>
                     <h2>Driver Licence Registration</h2>
                     <p>
@@ -265,8 +269,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <x-card>
                 <div class="card-contents">
-                    <div class="raised back button" on-click="_onBackClick">
-                        BACK
+                    <div class="raised back button" on-click="_onBackClick" style="width:50px">
+                        <iron-icon icon="arrow-back"></iron-icon>
                     </div>
                     <h2>Violation Record</h2>
                     <p>
