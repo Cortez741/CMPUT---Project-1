@@ -13,7 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
     <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 
@@ -119,10 +119,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
  </head>
 
  <body>
-
     <paper-drawer-panel>
 
-        <paper-header-panel drawer class="cyan x-scope paper-header-panel-0" style="width:256px">
+        <paper-header-panel drawer class="cyan x-scope paper-header-panel-0" style="width:256px;">
 
             <paper-toolbar>
                 <div class="paper-header animate">Dashboard</div>
