@@ -1,0 +1,44 @@
+<br><p>Please fill out this form.</p><br>
+    <div class="vertical-section-container centered">
+
+        <form is="iron-form" method="get" action="/" id="basic" style="width: 300px;">
+
+             <paper-input name="seller_id" label="Seller ID" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
+             <p>The Seller ID must be a valid SIN number formatted the following way 111222333444555 (without dashes)</p>
+
+             <paper-input name="buyer_id" label="Buyer ID" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
+             <p>The Buyer ID must be a valid SIN number formatted the following way 111222333444555 (without dashes)</p>
+
+             <paper-input name="vehicle_id" label="Vehicle ID" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
+
+            <paper-input name="price" label="Price" type="number" required>
+            <div prefix>$&nbsp;</div>
+            </paper-input>
+
+             <br>
+
+             <paper-checkbox name="today_date" value="yes" required>Did the transaction occur today?</paper-checkbox><br>
+
+             <paper-input name="s_date" label="Date"></paper-input><br>
+
+             <paper-button raised onclick="_submit(event)">Submit</paper-button>
+             <paper-button raised onclick="_reset(event)">Reset</paper-button>
+             <div class="output"></div>
+        </form>
+
+        <script>
+            function _submit(event) {
+            Polymer.dom(event).localTarget.parentElement.submit();
+            }
+            function _reset(event) {
+            var form = Polymer.dom(event).localTarget.parentElement
+            form.reset();
+            form.querySelector('.output').innerHTML = '';
+            }
+            basic.addEventListener('iron-form-submit', function(event) {
+            this.querySelector('.output').innerHTML = JSON.stringify(event.detail);
+            });
+        </script>
+
+    </div>
+    <br><br>

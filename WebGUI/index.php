@@ -129,12 +129,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </paper-toolbar>
 
             <paper-menu>
-                <a href="http://webdocs.cs.ualberta.ca/~vfrunza/"><paper-item>Home</paper-item></a>
-                <a href="http://webdocs.cs.ualberta.ca/~vfrunza/new-vehicle-reg.html"><paper-item>New Vehicle Reg</paper-item></a>
-                <a href="http://webdocs.cs.ualberta.ca/~vfrunza/"><paper-item>Auto Transaction</paper-item></a>
-                <a href="http://webdocs.cs.ualberta.ca/~vfrunza/"><paper-item>New Vehicle Reg</paper-item></a>
-                <a href="http://webdocs.cs.ualberta.ca/~vfrunza/"><paper-item>New Vehicle Reg</paper-item></a>
-                <a href="http://webdocs.cs.ualberta.ca/~vfrunza/"><paper-item>Searches</paper-item></a>
+                <a href="index.php?page=Home"><paper-item>Home</paper-item></a>
+                <a href="index.php?page=New%20Vehicle%20Registration"><paper-item>New Vehicle Registration</paper-item></a>
+                <a href="index.php?page=Auto%20Transaction"><paper-item>Auto Transaction</paper-item></a>
+                <a href="index.php?page=Driver%20License%20Registration"><paper-item>Driver License Registration</paper-item></a>
+                <a href="index.php?page=Violation%20Record"><paper-item>Violation Record</paper-item></a>
+                <a href="#"><paper-item>Searches</paper-item></a>
             </paper-menu>
 
             </paper-header-panel>
@@ -142,41 +142,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-header-panel main class="blue x-scope paper-header-panel-0" style="width:100%">
 
             <paper-toolbar>
-                <div class="paper-header animate">Home</div>
+                <div class="paper-header animate">
+			<?php 
+				$header= 'Home';
+				if (!empty($_GET['page'])) {
+					$header = $_GET['page'];
+				}
+				echo $header;
+			?>
+		</div>
             </paper-toolbar>
 
-            <div style="padding-left:20px; padding-right:20px">
-                <br>
-                <p>
-                    Welcome to the Online Vehicle Registry. To begin, please select an option from the sidebar to the left. Descriptions of each function can be found below.<br><br>
-
-                    The system consists of the following five application programs.<br><br>
-
-                    New Vehicle Registration<br><br>
-
-                    This component is used to register a new vehicle by an auto registration officer. By a new vehicle, we mean a vehicle that has not been registered in the database. The component shall allow an officer to enter the detailed information about the vehicle and personal information about its new owners, if it is not in the database. You may assume that all the information about vehicle types has been loaded in the initial database.<br><br>
-
-                    Auto Transaction<br><br>
-
-                    This component is used to complete an auto transaction. Your program shall allow the officer to enter all necessary information to complete this task, including, but not limiting to, the details about the seller, the buyer, the date, and the price. The component shall also remove the relevant information of the previous ownership.<br><br>
-
-                    Driver Licence Registration<br><br>
-
-                    This component is used to record the information needed to issuing a drive licence, including the personal information and a picture for the driver. You may assume that all the image files are stored in a local disk system.<br><br>
-
-                    Violation Record<br><br>
-
-                    This component is used by a police officer to issue a traffic ticket and record the violation. You may assume that all the information about ticket_type has been loaded in the initial database.<br><br>
-
-                    Search Engine<br><br>
-
-                    This component is used to perform the following searches.<br><br>
-
-                    List the name, licence_no, addr, birthday, driving class, driving_condition, and the expiring_data of a driver by entering either a licence_no or a given name. It shall display all the entries if a duplicate name is given.
-                    List all violation records received by a person if  the drive licence_no or sin of a person  is entered.
-                    Print out the vehicle_history, including the number of times that a vehicle has been changed hand, the average price, and the number of violations it has been involved by entering the vehicle's serial number.<br><br>
-
-                </p>
+            <div id="contents" style="padding-left:20px; padding-right:20px">
+		<?php
+			$contents = file_get_contents('Home.html');
+			if (!empty($_GET['page'])) {
+				$contents = file_get_contents($_GET['page'] . '.html');
+			}
+			echo $contents;
+		?>
             </div>
 
         </paper-header-panel>
