@@ -1,0 +1,326 @@
+<!doctype html>
+<!--
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+<head>
+    <title>Alberta Registry</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+    <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
+    <link rel="import" href="bower_components/neon-animation/neon-animated-pages.html">
+    <link rel="import" href="bower_components/neon-animation/neon-animations.html">
+    <link rel="import" href="bower_components/paper-styles/typography.html">
+    <link rel="import" href="x-card.html">
+    <link rel="import" href="x-cards-list.html">
+    <link rel="import" href="bower_components/iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="bower_components/iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="bower_components/paper-button/paper-button.html">
+    <link rel="import" href="bower_components/paper-checkbox/paper-checkbox.html">
+    <link rel="import" href="bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+    <link rel="import" href="bower_components/paper-input/paper-input.html">
+    <link rel="import" href="bower_components/paper-item/paper-item.html">
+    <link rel="import" href="bower_components/paper-menu/paper-menu.html">
+    <link rel="import" href="bower_components/paper-spinner/paper-spinner.html">
+    <link rel="import" href="bower_components/paper-styles/color.html">
+    <link rel="import" href="bower_components/paper-styles/typography.html">
+    <link rel="import" href="bower_components/iron-form/iron-form.html">
+    <link rel="import" href="simple-element.html">
+
+    <style is="custom-style" include="demo-pages-shared-styles">
+        .output {
+          margin-top: 20px;
+          word-wrap: break-word;
+          @apply(--paper-font-common-code);
+        }
+        form > paper-button {
+          width: 45%;
+          margin-top: 20px;
+        }
+        form > paper-button:not([disabled]) {
+          background: var(--paper-light-blue-500);
+          color: white;
+        }
+        button {
+          margin-top: 20px;
+        }
+        paper-spinner {
+          width: 14px;
+          height: 14px;
+          margin-right: 20px;
+        }
+        paper-dropdown-menu {
+          display: block;
+        }
+        demo-snippet {
+      --demo-snippet-code: {
+        max-height: 300px;
+      };
+    }
+    </style>
+
+    <style is="custom-style">
+      body {
+        padding: 15px;
+        @apply(--layout-fullbleed);
+        @apply(--paper-font-common-base);
+      }
+      neon-animated-pages {
+        height: 100%;
+      }
+      .large {
+        width: 100%
+      }
+      .button {
+        text-align: center;
+        width: 200px;
+        height: 32px;
+        line-height: 32px;
+        border-radius: 2px;
+        font-size: 0.9em;
+        background-color: #fff;
+        color: #646464;
+      }
+      .button.blue {
+        background-color: #4285f4;
+        color: #fff;
+      }
+      .button.raised {
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+      }
+      .button.back {
+        position: fixed;
+        top: 30px;
+        left: 30px;
+      }
+      .card-contents {
+        @apply(--layout-vertical);
+        @apply(--layout-center-center);
+        @apply(--layout-fit);
+      }
+      .button-container {
+        @apply(--layout-flex);
+        @apply(--layout-horizontal);
+        @apply(--layout-around-justified);
+      }
+    </style>
+
+ </head>
+
+ <body style="height:700px">
+    <template is="dom-bind">
+        <neon-animated-pages id="pages" selected="0">
+
+            <x-cards-list id="list">
+                <div class="card-contents">
+                    <h2>CMPUT 291 - Project 1</h2><br><br>
+
+                        <div class="blue raised button" on-click="_onNewVehicleRegistrationClick">
+                            New Vehicle Registration
+                        </div><br><br>
+                        <div class="blue raised button" on-click="_onAutoTransactionClick">
+                            Auto Transaction
+                        </div><br><br>
+                        <div class="blue raised button" on-click="_onDriverLicenceRegistrationClick">
+                            Driver Licence Registration
+                        </div><br><br>
+                        <div class="blue raised button" on-click="_onViolationRecordClick">
+                            Violation Record
+                        </div><br><br>
+
+                </div>
+            </x-cards-list>
+
+            <x-card>
+                <div class="card-contents">
+                    <div class="raised back button" on-click="_onBackClick" style="width:50px">
+                        <iron-icon icon="arrow-back"></iron-icon>
+                    </div>
+
+                    <div style="height:50px"></div>
+                    <h2>New Vehicle Registration</h2>
+                    <p>
+                        Please enter the information required for a new vehicle.<br>
+
+                    </p>
+                    <div class="vertical-section-container centered">
+
+                        <form is="iron-form" method="get" action="/" id="basic" style="width: 300px;">
+                             <paper-input name="serial_no" label="Serial Number" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
+
+                             <paper-input name="maker" label="Maker" char-counter maxlength="20" required></paper-input>
+
+                             <paper-input name="model" label="Model" char-counter maxlength="20" required></paper-input>
+
+                             <paper-input name="year" label="Year" required char-counter maxlength="4" auto-validate pattern="[0-9]*" error-message="please type a date"></paper-input>
+
+                             <paper-input name="color" label="Color" char-counter maxlength="10" required auto-validate pattern="[a-zA-Z]*" error-message="please only use letters"></paper-input>
+
+                             <paper-input name="type_id" label="Type" required auto-validate pattern="[0-9]*" error-message="please type an integer"></paper-input>
+
+                             <paper-input name="owner_id" label="Owner ID" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input><br>
+
+                             <paper-checkbox name="is_primary_owner" value="yes">Is this owner the primary owner?</paper-checkbox><br><br>
+
+                             <paper-button raised onclick="_submit(event)">Submit</paper-button>
+                             <paper-button raised onclick="_reset(event)">Reset</paper-button>
+                             <div class="output"></div>
+                        </form>
+
+                        <script>
+                            function _submit(event) {
+                            Polymer.dom(event).localTarget.parentElement.submit();
+                            }
+                            function _reset(event) {
+                            var form = Polymer.dom(event).localTarget.parentElement
+                            form.reset();
+                            form.querySelector('.output').innerHTML = '';
+                            }
+                            basic.addEventListener('iron-form-submit', function(event) {
+                            this.querySelector('.output').innerHTML = JSON.stringify(event.detail);
+                            });
+                        </script>
+
+                    </div>
+                </div>
+            </x-card>
+
+            <x-card>
+                <div class="card-contents">
+                    <div class="raised back button" on-click="_onBackClick" style="width:50px">
+                        <iron-icon icon="arrow-back"></iron-icon>
+                    </div>
+                    <h2>Auto Transaction</h2>
+                    <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+
+                    <div class="vertical-section-container centered">
+
+                        <form is="iron-form" method="get" action="/" id="basic" style="width: 300px;">
+                             <paper-input name="seller_id" label="Seller ID" required></paper-input>
+
+                             <paper-input name="buyer_id" label="Buyer ID" required></paper-input>
+
+                             <paper-input name="vehicle_id" label="Vehicle ID" required></paper-input>
+
+                             <paper-input name="price" label="Price" required></paper-input>
+
+                             <br>
+
+                             <paper-checkbox name="today_date" value="yes" required>Did the transaction occur today?</paper-checkbox><br>
+
+                             <paper-input name="s_date" label="Date"></paper-input><br>
+
+                             <paper-button raised onclick="_submit(event)">Submit</paper-button>
+                             <paper-button raised onclick="_reset(event)">Reset</paper-button>
+                             <div class="output"></div>
+                        </form>
+
+                        <script>
+                            function _submit(event) {
+                            Polymer.dom(event).localTarget.parentElement.submit();
+                            }
+                            function _reset(event) {
+                            var form = Polymer.dom(event).localTarget.parentElement
+                            form.reset();
+                            form.querySelector('.output').innerHTML = '';
+                            }
+                            basic.addEventListener('iron-form-submit', function(event) {
+                            this.querySelector('.output').innerHTML = JSON.stringify(event.detail);
+                            });
+                        </script>
+
+                    </div>
+                </div>
+            </x-card>
+
+            <x-card>
+                <div class="card-contents">
+                    <div class="raised back button" on-click="_onBackClick" style="width:50px">
+                        <iron-icon icon="arrow-back"></iron-icon>
+                    </div>
+                    <h2>Driver Licence Registration</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                </div>
+            </x-card>
+
+            <x-card>
+                <div class="card-contents">
+                    <div class="raised back button" on-click="_onBackClick" style="width:50px">
+                        <iron-icon icon="arrow-back"></iron-icon>
+                    </div>
+                    <h2>Violation Record</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    </p>
+                </div>
+            </x-card>
+
+        </neon-animated-pages>
+    </template>
+
+    <script>
+        var scope = document.querySelector('template[is="dom-bind"]');
+        scope._onNewVehicleRegistrationClick = function(event) {
+        this.$.list.sharedElements = {
+        'ripple': event.target,
+        'reverse-ripple': event.target
+        };
+        this.$.pages.selected = 1;
+        };
+        scope._onAutoTransactionClick = function(event) {
+        this.$.list.sharedElements = {
+        'ripple': event.target,
+        'reverse-ripple': event.target
+        };
+        this.$.pages.selected = 2;
+        };
+        scope._onDriverLicenceRegistrationClick = function(event) {
+        this.$.list.sharedElements = {
+        'ripple': event.target,
+        'reverse-ripple': event.target
+        };
+        this.$.pages.selected = 3;
+        };
+        scope._onViolationRecordClick = function(event) {
+        this.$.list.sharedElements = {
+        'ripple': event.target,
+        'reverse-ripple': event.target
+        };
+        this.$.pages.selected = 4;
+        };
+        scope._onBackClick = function(event) {
+        this.$.pages.selected = 0;
+        };
+    </script>
+
+</body>
+</html>
