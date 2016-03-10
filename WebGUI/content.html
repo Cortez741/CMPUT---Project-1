@@ -1,0 +1,182 @@
+<!--Home-->
+<div style="padding-left:20px; padding-right:20px">
+    <br>
+    <h2>Welcome</h2><br><br>
+
+    <p>Welcome to the Online Vehicle Registry. To begin, please select an option from the sidebar to the left. Descriptions of each function can be found below.</p><br><br>
+
+    <p>The system consists of the following five application programs.<br><br>
+
+    <h2>New Vehicle Registration</h2><br><br>
+
+    <p>This component is used to register a new vehicle by an auto registration officer. By a new vehicle, we mean a vehicle that has not been registered in the database. The component shall allow an officer to enter the detailed information about the vehicle and personal information about its new owners, if it is not in the database. You may assume that all the information about vehicle types has been loaded in the initial database.</p><br><br>
+
+    <h2>Auto Transaction</h2><br><br>
+
+    <p>This component is used to complete an auto transaction. Your program shall allow the officer to enter all necessary information to complete this task, including, but not limiting to, the details about the seller, the buyer, the date, and the price. The component shall also remove the relevant information of the previous ownership.</p><br><br>
+
+    <h2>Driver Licence Registration</h2><br><br>
+
+    <p>This component is used to record the information needed to issuing a drive licence, including the personal information and a picture for the driver. You may assume that all the image files are stored in a local disk system.</p><br><br>
+
+    <h2>Violation Record</h2><br><br>
+
+    <p>This component is used by a police officer to issue a traffic ticket and record the violation. You may assume that all the information about ticket_type has been loaded in the initial database.</p><br><br>
+
+    <h2>Search Engine</h2><br><br>
+
+    <p>This component is used to perform the following searches.</p><br><br>
+
+    <p>List the name, licence_no, addr, birthday, driving class, driving_condition, and the expiring_data of a driver by entering either a licence_no or a given name. It shall display all the entries if a duplicate name is given.<br>
+    List all violation records received by a person if  the drive licence_no or sin of a person  is entered.<br>
+    Print out the vehicle_history, including the number of times that a vehicle has been changed hand, the average price, and the number of violations it has been involved by entering the vehicle's serial number.</p><br><br>
+
+    </p>
+</div>
+
+
+<!--NVR-->
+<div style="padding-left:20px; padding-right:20px">
+    <br><p>Please fill out this form.</p><br>
+
+    <div class="vertical-section-container centered">
+
+        <form is="iron-form" method="get" action="/" id="basic" style="width: 300px;">
+
+             <paper-input name="serial_no" label="Serial Number" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
+
+             <paper-input name="maker" label="Maker" char-counter maxlength="20" required></paper-input>
+
+             <paper-input name="model" label="Model" char-counter maxlength="20" required></paper-input>
+
+             <paper-input name="year" label="Year" required char-counter maxlength="4" auto-validate pattern="[0-9]*" error-message="please type a date"></paper-input>
+
+             <paper-input name="color" label="Color" char-counter maxlength="10" required auto-validate pattern="[a-zA-Z]*" error-message="please only use letters"></paper-input>
+
+             <paper-input name="type_id" label="Type" required auto-validate pattern="[0-9]*" error-message="please type an integer"></paper-input>
+
+             <paper-input name="owner_id" label="Owner ID" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
+             <p>The Owner ID must be a valid SIN number formatted the following way 111222333444555 (without dashes)</p>
+
+             <br>
+
+             <paper-checkbox name="is_primary_owner" value="yes">Is this owner the primary owner?</paper-checkbox><br><br>
+
+             <paper-button raised onclick="_submit(event)">Submit</paper-button>
+             <paper-button raised onclick="_reset(event)">Reset</paper-button>
+             <div class="output"></div>
+
+        </form>
+
+        <script>
+            function _submit(event) {
+            Polymer.dom(event).localTarget.parentElement.submit();
+            }
+            function _reset(event) {
+            var form = Polymer.dom(event).localTarget.parentElement
+            form.reset();
+            form.querySelector('.output').innerHTML = '';
+            }
+            basic.addEventListener('iron-form-submit', function(event) {
+            this.querySelector('.output').innerHTML = JSON.stringify(event.detail);
+            });
+        </script>
+
+    </div>
+    <br><br>
+</div>
+
+<!--AT-->
+<div style="padding-left:20px; padding-right:20px">
+    <br><p>Please fill out this form.</p><br>
+    <div class="vertical-section-container centered">
+
+        <form is="iron-form" method="get" action="/" id="basic" style="width: 300px;">
+
+             <paper-input name="seller_id" label="Seller ID" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
+             <p>The Seller ID must be a valid SIN number formatted the following way 111222333444555 (without dashes)</p>
+
+             <paper-input name="buyer_id" label="Buyer ID" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
+             <p>The Buyer ID must be a valid SIN number formatted the following way 111222333444555 (without dashes)</p>
+
+             <paper-input name="vehicle_id" label="Vehicle ID" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
+
+            <paper-input name="price" label="Price" type="number" required>
+            <div prefix>$&nbsp;</div>
+            </paper-input>
+
+             <br>
+
+             <paper-checkbox name="today_date" value="yes" required>Did the transaction occur today?</paper-checkbox><br>
+
+             <paper-input name="s_date" label="Date"></paper-input><br>
+
+             <paper-button raised onclick="_submit(event)">Submit</paper-button>
+             <paper-button raised onclick="_reset(event)">Reset</paper-button>
+             <div class="output"></div>
+        </form>
+
+        <script>
+            function _submit(event) {
+            Polymer.dom(event).localTarget.parentElement.submit();
+            }
+            function _reset(event) {
+            var form = Polymer.dom(event).localTarget.parentElement
+            form.reset();
+            form.querySelector('.output').innerHTML = '';
+            }
+            basic.addEventListener('iron-form-submit', function(event) {
+            this.querySelector('.output').innerHTML = JSON.stringify(event.detail);
+            });
+        </script>
+
+    </div>
+    <br><br>
+</div>
+
+<!--DLR-->
+<div style="padding-left:20px; padding-right:20px">
+    <br><p>Please fill out this form.</p><br>
+    <div class="vertical-section-container centered">
+
+        <form is="iron-form" method="get" action="/" id="basic" style="width: 300px;">
+
+             <paper-input name="sin" label="Social Insurance Number" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
+             <p>The Social Insurance Number must be a valid SIN number formatted the following way 111222333444555 (without dashes)</p>
+
+             <paper-input name="name" label="Name" required char-counter maxlength="40" auto-validate pattern="[a-zZ-A]*" error-message="A name can only contain letters, dashes, and spaces."></paper-input>
+
+             <paper-input name="vehicle_id" label="Vehicle ID" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
+
+            <paper-input name="price" label="Price" type="number" required>
+            <div prefix>$&nbsp;</div>
+            </paper-input>
+
+             <br>
+
+             <paper-checkbox name="today_date" value="yes" required>Did the transaction occur today?</paper-checkbox><br>
+
+             <paper-input name="s_date" label="Date"></paper-input><br>
+
+             <paper-button raised onclick="_submit(event)">Submit</paper-button>
+             <paper-button raised onclick="_reset(event)">Reset</paper-button>
+             <div class="output"></div>
+        </form>
+
+        <script>
+            function _submit(event) {
+            Polymer.dom(event).localTarget.parentElement.submit();
+            }
+            function _reset(event) {
+            var form = Polymer.dom(event).localTarget.parentElement
+            form.reset();
+            form.querySelector('.output').innerHTML = '';
+            }
+            basic.addEventListener('iron-form-submit', function(event) {
+            this.querySelector('.output').innerHTML = JSON.stringify(event.detail);
+            });
+        </script>
+
+    </div>
+    <br><br>
+</div>
