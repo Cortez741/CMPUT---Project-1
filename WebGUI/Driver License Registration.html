@@ -24,15 +24,13 @@
 
          <paper-input name="licence_no" label="Licence Number" required char-counter maxlength="15" auto-validate pattern="[a-bA-B]*" error-message="Male = M,  Female = F"></paper-input>
 
-        <paper-input name="price" label="Price" type="number" required>
-        <div prefix>$&nbsp;</div>
-        </paper-input>
+        <paper-input name="class" label="Class" required char-counter maxlength="10"></paper-input>
 
-         <br>
+        <paper-input name="issuing_date" label="Issuing Date" required></paper-input>
 
-         <paper-checkbox name="today_date" value="yes" required>Did the transaction occur today?</paper-checkbox><br>
+        <paper-input name="expiring_date" label="Expiring Date" required></paper-input>
 
-         <paper-input name="s_date" label="Date"></paper-input><br>
+        <paper-input name="driving_cond" label="Driving Condition" required char-counter maxlength="1024"></paper-input>
 
          <paper-button raised onclick="_submit(event)">Submit</paper-button>
          <paper-button raised onclick="_reset(event)">Reset</paper-button>
