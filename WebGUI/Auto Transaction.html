@@ -1,17 +1,17 @@
 <br><p>Please fill out this form.</p><br>
 <div class="vertical-section-container centered">
 
-    <form is="iron-form" method="get" action="login.php" id="basic" style="width: 300px;">
+    <form is="iron-form" method="get" action="/" id="basic" style="width: 300px;">
 
-         <paper-input name="seller_id" label="Seller ID" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
+         <paper-input name="seller_id" label="Seller ID" char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
          <p>The Seller ID must be a valid SIN number formatted the following way 111222333444555 (without dashes)</p>
 
-         <paper-input name="buyer_id" label="Buyer ID" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
+         <paper-input name="buyer_id" label="Buyer ID" char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
          <p>The Buyer ID must be a valid SIN number formatted the following way 111222333444555 (without dashes)</p>
 
-         <paper-input name="vehicle_id" label="Vehicle ID" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
+         <paper-input name="vehicle_id" label="Vehicle ID" char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
 
-        <paper-input name="price" label="Price" type="number" required>
+        <paper-input name="price" label="Price" type="number">
         <div prefix>$&nbsp;</div>
         </paper-input>
 
@@ -43,7 +43,7 @@
 				document.getElementsByClassName('output')[0].innerHTML = myRequest.responseText;
     			}
 		};
-		myRequest.open("GET", "connection.cgi");
+		myRequest.open("GET", "Auto Transaction.cgi");
 		myRequest.send();	
         });
     </script>

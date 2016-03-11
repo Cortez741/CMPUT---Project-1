@@ -1,14 +1,28 @@
-#!/bin/env python
+#!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
 # enable debugging
-import cgitb
+import cgitb, Cookie, os
 cgitb.enable()
 
-values = {'host': 'gwynne.cs.ualberta.ca',
-          'port': 1521,
-	  'SID': 'CRS'}
+# create the cookie
+c=Cookie.SimpleCookie()
+# assign a value
+c['raspberrypi']='Hello world'
+# set the xpires time
+c['raspberrypi']['expires']=1*1*3*60*60
 
-print "Content-type: text/html"
-print
-print '''Weeee'''
+# print the header, starting with the cookie
+print c
+print "Content-type: text/html\n"
+print ""
+print ""
+print '''
+<html>
+	<head>
+		<script>
+			window.location.href = "index.php";
+		</script>
+	</head>
+</html>
+'''
