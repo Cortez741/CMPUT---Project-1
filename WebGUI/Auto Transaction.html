@@ -4,10 +4,10 @@
     <form is="iron-form" method="get" action="/" id="basic" style="width: 300px;">
 
          <paper-input name="seller_id" label="Seller ID" char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
-         <p>The Seller ID must be a valid SIN number formatted the following way 111222333444555 (without dashes)</p>
+         <p>The Seller ID must be a valid SIN number formatted the following way 111222333444555 (no dashes)</p>
 
          <paper-input name="buyer_id" label="Buyer ID" char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
-         <p>The Buyer ID must be a valid SIN number formatted the following way 111222333444555 (without dashes)</p>
+         <p>The Buyer ID must be a valid SIN number formatted the following way 111222333444555 (no dashes)</p>
 
          <paper-input name="vehicle_id" label="Vehicle ID" char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
 
@@ -15,11 +15,8 @@
         <div prefix>$&nbsp;</div>
         </paper-input>
 
-         <br>
-
-         <paper-checkbox name="today_date" value="yes">Did the transaction occur today?</paper-checkbox><br>
-
          <paper-input name="s_date" label="Date"></paper-input><br>
+         <p>Please use the following format, yyyy/mm/dd. Please add the slashes.</p>
 
          <paper-button raised onclick="_submit(event)">Submit</paper-button>
          <paper-button raised onclick="_reset(event)">Reset</paper-button>
@@ -44,7 +41,7 @@
     			}
 		};
 		myRequest.open("GET", "Auto Transaction.cgi");
-		myRequest.send();	
+		myRequest.send();
         });
     </script>
 
