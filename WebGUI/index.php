@@ -142,7 +142,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <paper-toolbar>
                 <div class="paper-header animate">
-			<?php 
+			<?php
 				$header= 'Home';
 				if (!empty($_GET['page'])) {
 					$header = $_GET['page'];
@@ -154,7 +154,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             <div id="contents" style="padding-left:20px; padding-right:20px">
 		<?php
-			$contents = file_get_contents('Home.html');
+			$contents = file_get_contents('/home/vfrunzac/public_html/Home.html');
 			if (!empty($_GET['page'])) {
 				$contents = file_get_contents($_GET['page'] . '.html');
 			}

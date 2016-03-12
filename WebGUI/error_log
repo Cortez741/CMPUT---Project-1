@@ -1,0 +1,3 @@
+[12-Mar-2016 10:42:55 America/Denver] PHP Warning:  file_get_contents(Home.html): failed to open stream: No such file or directory in /home/vfrunzac/public_html/index.php on line 157
+[12-Mar-2016 10:42:57 America/Denver] PHP Warning:  file_get_contents(Home.html): failed to open stream: No such file or directory in /home/vfrunzac/public_html/index.php on line 157
+[12-Mar-2016 12:27:49 America/Denver] PHP Warning:  file_get_contents(/Home.html): failed to open stream: No such file or directory in /home/vfrunzac/public_html/index.php on line 157

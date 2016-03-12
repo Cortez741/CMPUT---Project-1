@@ -1,1 +1,4 @@
 DirectoryIndex index.html
+
+Options +ExecCGI
+AddHandler cgi-script cgi pl
