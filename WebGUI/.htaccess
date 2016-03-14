@@ -1,6 +1,1 @@
 DirectoryIndex index.html
-
-<Directory connection.py />
-  Options +ExecCGI
-  AddHandler cgi-script .py
-</Directory>

@@ -1,0 +1,57 @@
+<p>Welcome to the search interface.</p>
+
+<p>Below are the searches you can preform. Once you select a search type, you will be redirected to the "Results" page. You may also go to this page via the sidebar to see the results of your last search.</p>
+
+
+<paper-material elevation="2">
+    <div style="padding-left:20px; padding-right:20px; padding-bottom:20px; padding-top:20px">
+        <h2>Driver Information</h2>
+        <p>List the name, licence_no, addr, birthday, driving class, driving_condition, and the expiring_data of a driver by entering either a licence_no or a given name. It shall display all the entries if a duplicate name is given.</p>
+
+        <form action="/cgi-bin/Search-Driver.cgi" method="post" style="width:400px; padding-left:20px; padding-right:20px;">
+            <paper-input name="name" label="Name" char-counter maxlength="40" auto-validate pattern="[a-zA-Z ]*" error-message="Please only type a name with letters and spaces."></paper-input>
+            <paper-input name="licence_no" label="Licence Number" char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="Please only tyupe a valid SIN with numbers only."></paper-input>
+            <br>
+            <paper-button raised style="height:42px; width:88px; padding-top:0px">
+                <button style="height:42px; width:88px; padding-top: 12px; padding-right: 26px;" type="submit" value="Login">Search</button>
+            </paper-button>
+        </form>
+    </div>
+</paper-material>
+
+<br>
+
+<paper-material elevation="2">
+    <div style="padding-left:20px; padding-right:20px; padding-bottom:20px; padding-top:20px">
+        <h2>Vehicle History</h2>
+        <p>Print out the vehicle_history, including the number of times that a vehicle has been changed hand, the average price, and the number of violations it has been involved by entering the vehicle's serial number.</p>
+
+        <form action="/cgi-bin/Search.cgi" method="post" style="width:400px; padding-left:20px; padding-right:20px;">
+            <paper-input name="serial" label="Serial Number" char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="Please only type numbers"></paper-input>
+            <br>
+            <paper-button raised style="height:42px; width:88px; padding-top:0px">
+                <button style="height:42px; width:88px; padding-top: 12px; padding-right: 26px;" type="submit" value="Login">Search</button>
+            </paper-button>
+        </form>
+    </div>
+</paper-material>
+
+<br>
+
+<paper-material elevation="2">
+    <div style="padding-left:20px; padding-right:20px; padding-bottom:20px; padding-top:20px">
+        <h2>Violation Records</h2>
+        <p>List all violation records received by a person if  the drive licence_no or sin of a person  is entered.</p>
+
+        <form action="/cgi-bin/Search.cgi" method="post" style="width:400px; padding-left:20px; padding-right:20px;">
+            <paper-input name="violation_sin" label="SIN Number" char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="Please only tyupe a valid SIN with numbers only."></paper-input>
+            <paper-input name="licence_no" label="Licence Number" char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="Please only type numbers."></paper-input>
+            <br>
+            <paper-button raised style="height:42px; width:88px; padding-top:0px">
+                <button style="height:42px; width:88px; padding-top: 12px; padding-right: 26px;" type="submit" value="Login">Search</button>
+            </paper-button>
+        </form>
+    </div>
+</paper-material>
+
+<br><br>

@@ -1,122 +1,92 @@
 <html>
+
 <head>
-    <title>Registry - Home</title>
+	<title>Registry - Home</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+	<script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+	<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
+	<link rel="import" href="bower_components/paper-styles/typography.html">
+	<link rel="import" href="bower_components/paper-button/paper-button.html">
+	<link rel="import" href="bower_components/paper-checkbox/paper-checkbox.html">
+	<link rel="import" href="bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+	<link rel="import" href="bower_components/paper-input/paper-input.html">
+	<link rel="import" href="bower_components/paper-item/paper-item.html">
+	<link rel="import" href="bower_components/paper-menu/paper-menu.html">
+	<link rel="import" href="bower_components/paper-spinner/paper-spinner.html">
+	<link rel="import" href="bower_components/paper-styles/color.html">
+	<link rel="import" href="bower_components/paper-styles/typography.html">
+	<link rel="import" href="bower_components/iron-form/iron-form.html">
+	<link rel="import" href="bower_components/paper-styles/demo-pages.html">
+	<link rel="import" href="bower_components/paper-button/paper-button.html">
+	<link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html">
+	<link rel="import" href="bower_components/paper-styles/paper-styles.html">
+	<link rel="import" href="bower_components/paper-styles/demo-pages.html">
+	<link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">
+	<link rel="import" href="bower_components/paper-card/paper-card.html">
+	<style is="custom-style">
+		paper-header-panel {
+			float: left;
+			width: 240px;
+			height: 240px;
+			@apply(--shadow-elevation-2dp);
+		}
+		.paper-header {
+			height: 60px;
+			font-size: 16px;
+			line-height: 60px;
+			padding: 0 10px;
+			color: white;
+			transition: height 0.2s;
+		}
+		.paper-header.tall {
+			height: 120px;
+		}
+		.paper-header.medium-tall {
+			height: 100px;
+			line-height: 50px;
+		}
+		.content {
+			height: 2000px;
+		}
+		.cover {
+			margin: 60px;
+		}
+		<style shim-shadowdom> paper-button {
+			padding-top: 0px;
+		}
+		paper-button::shadow .button-content {
+			padding: 0;
+		}
+		paper-button button {
+			padding: 1em;
+			background-color: transparent;
+			border-color: transparent;
+		}
+		paper-button button::-moz-focus-inner {
+			border: 0;
+		}
+	</style>
+</head>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-
-    <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
-    <link rel="import" href="bower_components/paper-styles/typography.html">
-    <link rel="import" href="bower_components/paper-button/paper-button.html">
-    <link rel="import" href="bower_components/paper-checkbox/paper-checkbox.html">
-    <link rel="import" href="bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
-    <link rel="import" href="bower_components/paper-input/paper-input.html">
-    <link rel="import" href="bower_components/paper-item/paper-item.html">
-    <link rel="import" href="bower_components/paper-menu/paper-menu.html">
-    <link rel="import" href="bower_components/paper-spinner/paper-spinner.html">
-    <link rel="import" href="bower_components/paper-styles/color.html">
-    <link rel="import" href="bower_components/paper-styles/typography.html">
-    <link rel="import" href="bower_components/iron-form/iron-form.html">
-    <link rel="import" href="bower_components/paper-styles/demo-pages.html">
-    <link rel="import" href="bower_components/paper-button/paper-button.html">
-    <link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html">
-    <link rel="import" href="bower_components/paper-styles/paper-styles.html">
-    <link rel="import" href="bower_components/paper-styles/demo-pages.html">
-    <link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">
-
-    <style>
-        a {
-        color: black;
-        text-decoration: none; /* no underline */
-        }
-    </style>
-    <style is="custom-style">
-      paper-header-panel {
-        float: left;
-        width: 240px;
-        height: 240px;
-        @apply(--shadow-elevation-2dp);
-      }
-      .paper-header {
-        height: 60px;
-        font-size: 16px;
-        line-height: 60px;
-        padding: 0 10px;
-        color: white;
-        transition: height 0.2s;
-      }
-      .paper-header.tall {
-        height: 120px;
-      }
-      .paper-header.medium-tall {
-        height: 100px;
-        line-height: 50px;
-      }
-      .content {
-        height: 2000px;
-      }
-      .cover {
-        margin: 60px;
-      }
-      .blue .paper-header {
-        background-color: var(--paper-light-blue-500);
-      }
-      .red .paper-header {
-        background-color: var(--paper-red-500);
-      }
-      .orange .paper-header {
-        background-color: var(--paper-amber-500);
-      }
-      .green .paper-header {
-        background-color: var(--paper-green-500);
-      }
-      .cyan .paper-header {
-        background-color: var(--paper-cyan-500);
-      }
-      .lime .paper-header {
-        background-color: var(--paper-lime-500);
-      }
-      .pink .paper-header {
-        background-color: var(--paper-pink-a200);
-      }
-      /* TODO: replace these with background: linear-gradient(white, var(...))
-       when custom properties allow it */
-      .blue .content {
-        background: linear-gradient(white, #b3e5fc);
-      }
-      .red .content {
-        background: linear-gradient(white, #ffcdd2);
-      }
-      .orange .content {
-        background: linear-gradient(white, #ffecb3);
-      }
-      .green .content {
-        background: linear-gradient(white, #c8e6c9);
-      }
-      .cyan .content {
-        background: linear-gradient(white, #b2ebf2);
-      }
-      .lime .content {
-        background: linear-gradient(white, #f0f4c3);
-      }
-      .pink .content {
-        background: linear-gradient(white, #f8bbd0);
-      }
-    </style>
-
- </head>
 <body>
-	<form action="connection.py" method="post">
-	  	Host:<br>
-	 	<paper-input type="text" name="host" value="ohaton.cs.ualberta.ca"></paper-input><br>
- 		Port:<br>
- 		<paper-input type="text" name="port" value="1521"></paper-input><br>
- 		SID:<br>
- 		<paper-input type="text" name="sid" value="CRS"></paper-input><br>
- 		<paper-input type="submit" value="Submit">
-	</form>
+	<div style="padding-left:50%; margin-left:-242px;">
+		<paper-card layout vertical image="/UAlberta.png">
+			<div class="card-content"> Please Log-in Using your Oracle Username and Password </div>
+			<form action="/cgi-bin/login.cgi" method="post" style="padding-left:20px; padding-right:20px;">
+				<paper-input name="user" label="Username" type="text" required></paper-input>
+				<paper-input name="password" label="Password" type="password" required></paper-input>
+				<br>
+				<br>
+				<paper-button raised style="height:42px; width:88px; padding-top:0px">
+					<button style="height:42px; width:88px; padding-top: 12px; padding-right: 26px;" type="submit" value="Login">Login</button>
+				</paper-button>
+				<div class="output"></div>
+			</form>
+		</paper-card>
+	</div>
 </body>
-</html?
+
+</html>
