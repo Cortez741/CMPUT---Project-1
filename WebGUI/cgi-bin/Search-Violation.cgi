@@ -84,22 +84,26 @@ class LengthError(Exception):
 	def __init__(self):
 		pass
 
+class NoSINError(Exception):
+	def __init__(self):
+		pass
+
+class NoLicenceError(Exception):
+	def __init__(self):
+		pass
+
 class NoResultsError(Exception):
 	def __init__(self):
 		pass
 
 def SendToOracle(sql):
-	c=Cookie.SimpleCookie()
-	if 'HTTP_COOKIE' in os.environ:
+	c = Cookie.SimpleCookie()
+ 	if 'HTTP_COOKIE' in os.environ:
 		c.load(os.environ['HTTP_COOKIE'])
+
 	try:
 		db = cx_Oracle.connect(c["user"].value+'/'+c["password"].value+'@localhost:61234/CRS')
-		cur = db.cursor()
-		cur.execute(sql)
-		result = cur.fetchall()
-		cur.close()
-		db.close()
-		return result
+
 	except:
 		print '''
 		<paper-material elevation="2">
@@ -112,18 +116,25 @@ def SendToOracle(sql):
 	</body>
 	</html>
 		'''
+	cur = db.cursor()
+	cur.execute(sql)
+	result = cur.fetchall()
+	cur.close()
+	db.close()
+	return result
 
 def PrintResults(result):
 	print '''<table class="table">'''
 	print '''
 	<tr>
-		<th>Name</th>
-		<th>Address</th>
-		<th>Birthday</th>
-		<th>Licence Number</th>
-		<th>Class</th>
-		<th>Description of Restriction</th>
-		<th>Expiring Data</th>
+		<th>Ticket Number</th>
+		<th>Violator ID</th>
+		<th>Vehicle ID</th>
+		<th>Office Number</th>
+		<th>Violation Type</th>
+		<th>Place</th>
+		<th>Description of Violation</th>
+		<th>Fine</th>
 	</tr>
 	'''
 	for row in result:
@@ -142,38 +153,53 @@ def PrintResults(result):
 		</html>
 		'''
 
+def SinSQL(sin):
+	sin = "'"+str(sin)+"'"
+	sin_SQL = "SELECT ticket_no, violator_no, vehicle_id, office_no, f.vtype, place, descriptions, fine FROM ticket t, ticket_type f, drive_licence d WHERE UPPER(d.sin) = "+sin.upper()+" AND d.sin = t.violator_no AND t.vtype = f.vtype"
+	return sin_SQL
 
 def LicenceSQL(licence_no):
-	licence_SQL = "SELECT DISTINCT p.name, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date FROM people p, drive_licence l LEFT OUTER JOIN restriction r ON r.licence_no=l.licence_no LEFT OUTER JOIN driving_condition c ON c.c_id=r.r_id WHERE UPPER(l.licence_no) = "+str(licence_no.upper())+" AND l.sin = p.sin"
+	licence_no = "'"+str(licence_no)+"'"
+	licence_SQL = "SELECT ticket_no, violator_no, vehicle_id, office_no, f.vtype, place, descriptions, fine FROM ticket t, ticket_type f, drive_licence d WHERE UPPER(d.licence_no) = "+licence_no.upper()+" AND d.sin = t.violator_no AND t.vtype = f.vtype"
 	return licence_SQL
 
-def NameSQL(name):
-	name = "'"+name+"'"
-	name_SQL = "SELECT DISTINCT p.name, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date FROM people p, drive_licence l LEFT OUTER JOIN restriction r ON r.licence_no=l.licence_no LEFT OUTER JOIN driving_condition c ON c.c_id=r.r_id WHERE UPPER(p.name) = "+name.upper()+" AND l.sin = p.sin"
-	return name_SQL
-
-
 def LicenceValidation(licence_no):
+	test_int = int(licence_no)
 	if len(str(licence_no)) != 15:
 		raise LengthError
+	licence_no = "'"+str(licence_no)+"'"
+	sin_SQL = "SELECT * FROM drive_licence d WHERE UPPER(d.licence_no) = "+licence_no.upper()
+	result = SendToOracle(sin_SQL)
+	if result == []:
+		raise NoLicenceError
+
+def SINValidation(sin):
+	test_int = int(sin)
+	if len(str(sin)) != 15:
+		raise LengthError
+	sin = "'"+str(sin)+"'"
+	sin_SQL = "SELECT * FROM people WHERE UPPER(people.sin) = "+sin.upper()
+	result = SendToOracle(sin_SQL)
+	if result == []:
+		raise NoSINError
 
 try:
 	form = cgi.FieldStorage()
-
+	sin = form.getvalue("violation_sin")
 	licence_no = form.getvalue("licence_no")
-	name = form.getvalue("name")
 
-	if name == None:
+	if sin == None:
 		LicenceValidation(licence_no)
-		result = LicenceSQL(licence_no)
-		result = SendToOracle(result)
+		licence_SQL = LicenceSQL(licence_no)
+		result = SendToOracle(licence_SQL)
 		if result == []:
 			raise NoResultsError
 		PrintResults(result)
 
 	if licence_no == None:
-		result = NameSQL(name)
-		result = SendToOracle(result)
+		SINValidation(sin)
+		sin_SQL = SinSQL(sin)
+		result = SendToOracle(sin_SQL)
 		if result == []:
 			raise NoResultsError
 		PrintResults(result)
@@ -182,8 +208,8 @@ except LengthError:
 	print '''
 	<paper-material elevation="2">
 	<div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; padding-left: 20px;">
-		<h2>Invalid Licence Number</h2>
-		<p>The licence number you entered was not 15 digits long. Please type one 15 digit number without spaces or dashes. Please Try again.</p>
+		<h2>Invalid Input</h2>
+		<p>The inputs you entered was not 15 characters long. Please type one 15 character long string. Please Try again.</p>
 		<br>
 		<a href="http://vfrunza.ca/index.php?page=Search"><paper-button raised>Back</paper-button></a>
 	</paper-material>
@@ -192,11 +218,24 @@ except LengthError:
 	'''
 
 except NoResultsError:
+    print '''
+    <paper-material elevation="2">
+    <div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; padding-left: 20px;">
+        <h2>No Results</h2>
+        <p>Your search returned no results.</p>
+        <br>
+        <a href="http://vfrunza.ca/index.php?page=Search"><paper-button raised>Back</paper-button></a>
+    </paper-material>
+</body>
+</html>
+    '''
+
+except NoSINError:
 	print '''
 	<paper-material elevation="2">
 	<div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; padding-left: 20px;">
-		<h2>No Results</h2>
-		<p>Your search returned no results. Please review your query for any errors that would lead in no results.</p>
+		<h2>No SIN Exisits</h2>
+		<p>The SIN you entered does not exist in this database, please try again.</p>
 		<br>
 		<a href="http://vfrunza.ca/index.php?page=Search"><paper-button raised>Back</paper-button></a>
 	</paper-material>
@@ -204,29 +243,29 @@ except NoResultsError:
 </html>
 	'''
 
-
-except ValueError:
+except NoLicenceError:
 	print '''
 	<paper-material elevation="2">
 	<div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; padding-left: 20px;">
-		<h2>Invalid Lincence Number</h2>
-		<p>The licence number you entered was not made of only numbers. Please type one 15 digit number without spaces or dashes. Please Try again.</p>
+		<h2>No Licence Number Exisits</h2>
+		<p>The Licence Number you entered does not exist in this database, please try again.</p>
 		<br>
 		<a href="http://vfrunza.ca/index.php?page=Search"><paper-button raised>Back</paper-button></a>
 	</paper-material>
 </body>
 </html>
 	'''
+
 except:
-	print '''
-	<paper-material elevation="2">
-	<div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; padding-left: 20px;">
-		<h2>Database Error</h2>
-		<p>An unexpected error occured. Please try again.</p>
-		<br>
-		<a href="http://vfrunza.ca/index.php?page=Search"><paper-button raised>Back</paper-button></a>
-	</paper-material>
+    print '''
+    <paper-material elevation="2">
+    <div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; padding-left: 20px;">
+        <h2>Database Error</h2>
+        <p>An unexpected error occured. Please try again.</p>
+        <br>
+        <a href="http://vfrunza.ca/index.php?page=Search"><paper-button raised>Back</paper-button></a>
+    </paper-material>
 
 </body>
 </html>
-	'''
+    '''

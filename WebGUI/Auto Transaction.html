@@ -1,53 +1,83 @@
 <br><p>Please fill out this form.</p><br>
-<div class="vertical-section-container centered">
+<div id="basicdiv" class="vertical-section-container centered">
+	<form is="iron-form" method="get" action="/" id="basic" style="width: 400px;">
+        	<paper-input name="seller_id" label="Seller ID" char-counter maxlength="15"></paper-input><br>
+        	<paper-input name="buyer_id" label="Buyer ID" char-counter maxlength="15"></paper-input><br>
+        	<paper-input name="vehicle_id" label="Vehicle ID" char-counter maxlength="15"></paper-input>
+       		<paper-input name="price" label="Price" type="number">
+        	<div prefix>$&nbsp;</div>
+        	</paper-input>
+        	<paper-input name="s_date" label="Date"></paper-input><br><br>
+        	<p>Please use the following format, yyyy-mm-dd. Please add the slashes.</p>
+        	<paper-input name="prim_owner" label="Primary Owner" required char-counter maxlength="15"></paper-input>
+        	<paper-input name="owners" label="Other Owners"></paper-input><br>
+        	<p>Please list the SIN numbers of all other owners (but not priomary owners) here. Please separate the SIN numbers by a comma.</p>
 
-    <form is="iron-form" method="get" action="/" id="basic" style="width: 400px;">
+		<paper-button raised onclick="_submit(event)">Submit</paper-button>
+        	<paper-button raised onclick="_reset(event)">Reset</paper-button>
+        	<div class="output"></div>
+    	</form>
 
-         <paper-input name="seller_id" label="Seller ID" char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
-         <p>The Seller ID must be a valid SIN number formatted the following way 111222333444555 (no dashes)</p>
-
-         <paper-input name="buyer_id" label="Buyer ID" char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
-         <p>The Buyer ID must be a valid SIN number formatted the following way 111222333444555 (no dashes)</p>
-
-         <paper-input name="vehicle_id" label="Vehicle ID" char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
-
-        <paper-input name="price" label="Price" type="number">
-        <div prefix>$&nbsp;</div>
-        </paper-input>
-
-         <paper-input name="s_date" label="Date"></paper-input><br>
-         <p>Please use the following format, yyyy/mm/dd. Please add the slashes.</p>
-
-         <paper-input name="prim_owner" label="Primary Owner" required></paper-input>
-
-         <paper-input name="owners" label="Other Owners"></paper-input>
-         <p>Please list the SIN numbers of all other owners (but not priomary owners) here. Please separate the SIN numbers by a comma.</p>
-
-         <paper-button raised onclick="_submit(event)">Submit</paper-button>
-         <paper-button raised onclick="_reset(event)">Reset</paper-button>
-         <div class="output"></div>
-    </form>
-
-    <script>
-        function _submit(event) {
-        Polymer.dom(event).localTarget.parentElement.submit();
-        }
-        function _reset(event) {
-        	var form = Polymer.dom(event).localTarget.parentElement
-        	form.reset();
-        	form.querySelector('.output').innerHTML = '';
-        }
-        basic.addEventListener('iron-form-submit', function(event) {
-		var myRequest = new XMLHttpRequest();
-		myRequest.onreadystatechange = function() {
-    			if (myRequest.readyState == 4 && myRequest.status == 200) {
-				document.getElementsByClassName('output')[0].innerHTML = myRequest.responseText;
-    			}
-		};
-		myRequest.open("GET", "/cgi-bin/Auto Transaction.cgi");
-		myRequest.send();
-        });
-    </script>
-
+    	<script>
+        	function _submit(event) {
+        		Polymer.dom(event).localTarget.parentElement.submit();
+        	}
+        	function _reset(event) {
+        		var form = Polymer.dom(event).localTarget.parentElement
+        		form.reset();
+        		form.querySelector('.output').innerHTML = '';
+        	}
+        	basic.addEventListener('iron-form-submit', function(event) {
+			var myRequest = new XMLHttpRequest();
+			myRequest.onreadystatechange = function() {
+    				if (myRequest.readyState == 4 && myRequest.status == 200) {
+					document.getElementsByClassName('output')[0].innerHTML = myRequest.responseText;
+    				}
+			};
+			myRequest.open("GET", "/cgi-bin/Auto Transaction.cgi?"+"seller_id="+document.getElementsByName("seller_id")[0].value+"&"+"buyer_id="+document.getElementsByName("buyer_id")[0].value+"&"+"vehicle_id="+document.getElementsByName("vehicle_id")[0].value+"&"+"price="+document.getElementsByName("price")[0].value+"&"+"s_date="+document.getElementsByName("s_date")[0].value+"&"+"prim_owner="+document.getElementsByName("prim_owner")[0].value+"&"+"owners="+document.getElementsByName("owners")[0].value);
+			myRequest.send();
+        	});
+    	</script>
 </div>
 <br><br>
+<div id="adduserdiv" class="vertical-section-container centered" style="visibility:hidden; position:absolute;">
+	<h2>Add a New Person</h2>
+	<p>Please fill out the form to add a new individual to the database.</p>
+	<form is="iron-form" action="/" method="get" id="adduser" style="width:400px;">
+		<paper-input name="name" label="Name" required char-counter maxlength="40" auto-validate pattern="[a-zA-Z- ]*" error-message="A name can only contain letters, dashes, and spaces."></paper-input>
+		<paper-input name="height" label="Height (cm)" required char-counter maxlength="8" auto-validate pattern="[0-9.]*" error-message="Please type a number with 5 digets before the decimal, and two after the decimal."></paper-input>
+		<paper-input name="weight" label="Weight (kg)" required char-counter maxlength="8" auto-validate pattern="[0-9.]*" error-message="Please type a number with 5 digets before the decimal, and two after the decimal."></paper-input>
+		<paper-input name="eye_color" label="Eye Color" required char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="Please only enter letters."></paper-input>
+		<paper-input name="hair_color" label="Hair Color" required char-counter maxlength="10" auto-validate pattern="[a-zA-Z]*" error-message="Please only enter letters."></paper-input>
+		<paper-input name="addr" label="Address" required char-counter maxlength="50"></paper-input><br>
+		<p>Please use the following format, yyyy/mm/dd. Please add the slashes.</p>
+		<paper-input name="gender" label="Gender" required char-counter maxlength="1" auto-validate pattern="[mfMF]*" error-message="Male = M,  Female = F"></paper-input>
+		<paper-input name="bday" label="Birthday" required></paper-input>
+		<br>
+
+		<paper-button raised onclick="_submitadd(event)">Submit</paper-button>
+		<paper-button raised onclick="_resetadd(event)">Reset</paper-button>
+        	<div class="outputadd"></div>
+	</form>
+	<br><br>
+	<script>
+        	function _submitadd(event) {
+        		Polymer.dom(event).localTarget.parentElement.submit();
+       		}
+        	function _resetadd(event) {
+        		var form = Polymer.dom(event).localTarget.parentElement
+         		form.reset();
+         		form.querySelector('.outputadd').innerHTML = '';
+        	}
+        	adduser.addEventListener('iron-form-submit', function(event) {
+  			var myRequest = new XMLHttpRequest();
+  			myRequest.onreadystatechange = function() {
+       				if (myRequest.readyState == 4 && myRequest.status == 200) {
+    					document.getElementsByClassName('outputadd')[0].innerHTML = myRequest.responseText;
+				}
+       			};
+  			myRequest.open("GET", "/cgi-bin/Add-Person.cgi?"+"name="+document.getElementsByName("name")[0].value+"&"+"height="+document.getElementsByName("height")[0].value+"&"+"weight="+document.getElementsByName("weight")[0].value+"&"+"eye_color="+document.getElementsByName("eye_color")[0].value+"&"+"hair_color="+document.getElementsByName("hair_color")[0].value+"&"+"addr="+document.getElementsByName("addr")[0].value+"&"+"gender="+document.getElementsByName("gender")[0].value+"&"+"bday="+document.getElementsByName("bday")[0].value);
+  			myRequest.send();
+        	});
+	</script>
+</div>

@@ -1,3 +1,0 @@
-[13-Mar-2016 13:28:03 America/Denver] PHP Parse error:  syntax error, unexpected '_GET' (T_STRING), expecting variable (T_VARIABLE) or '$' in /home/vfrunzac/public_html/index.php on line 149
-[13-Mar-2016 21:31:14 America/Denver] PHP Warning:  file_get_contents(Search .html): failed to open stream: No such file or directory in /home/vfrunzac/public_html/index.php on line 166
-[13-Mar-2016 21:53:00 America/Denver] PHP Warning:  file_get_contents(Results.html): failed to open stream: No such file or directory in /home/vfrunzac/public_html/index.php on line 169

@@ -15,24 +15,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 	<script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+	<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 	<link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout.html">
-	<link rel="import" href="bower_components/paper-styles/typography.html">
+	<link rel="import" href="bower_components/iron-form/iron-form.html">
 	<link rel="import" href="bower_components/paper-button/paper-button.html">
 	<link rel="import" href="bower_components/paper-checkbox/paper-checkbox.html">
 	<link rel="import" href="bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 	<link rel="import" href="bower_components/paper-input/paper-input.html">
+	<link rel="import" href="bower_components/paper-input/paper-textarea.html">
 	<link rel="import" href="bower_components/paper-item/paper-item.html">
 	<link rel="import" href="bower_components/paper-menu/paper-menu.html">
 	<link rel="import" href="bower_components/paper-spinner/paper-spinner.html">
 	<link rel="import" href="bower_components/paper-styles/color.html">
 	<link rel="import" href="bower_components/paper-styles/typography.html">
-	<link rel="import" href="bower_components/iron-form/iron-form.html">
 	<link rel="import" href="bower_components/paper-styles/demo-pages.html">
+	<link rel="import" href="bower_components/paper-styles/paper-styles.html">
 	<link rel="import" href="bower_components/paper-button/paper-button.html">
 	<link rel="import" href="bower_components/paper-drawer-panel/paper-drawer-panel.html">
 	<link rel="import" href="bower_components/paper-styles/paper-styles.html">
 	<link rel="import" href="bower_components/paper-styles/demo-pages.html">
 	<link rel="import" href="bower_components/paper-header-panel/paper-header-panel.html">
+	<link rel="import" href="bower_components/paper-card/paper-card.html">
+	<link rel="import" href="bower_components/paper-dialog/paper-dialog.html">
+	<link rel="import" href="bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+
+	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<style>
 		a {
 			color: black;
@@ -41,6 +48,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 		}
 	</style>
 	<style is="custom-style">
+		paper-button button {
+			padding: 1em;
+			background-color: transparent;
+			border-color: transparent;
+		}
+
 		paper-header-panel {
 			float: left;
 			width: 240px;
@@ -141,10 +154,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 				<a href="index.php?page=Search">
 					<paper-item>Searches</paper-item>
 				</a>
-				<a href="index.php?page=Results">
-					<paper-item>Results</paper-item>
-				</a>
-        <a href="#">
+        <a href="/cgi-bin/logout.cgi">
           <paper-material style="elevation:4" class="paper-item-0">Logout</paper-material>
         </a>
 			</paper-menu>

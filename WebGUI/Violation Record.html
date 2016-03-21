@@ -1,24 +1,23 @@
 <br><p>Please fill out this form.</p><br>
     <div class="vertical-section-container centered">
 
-        <form is="iron-form" method="get" action="/" id="basic" style="width: 300px;">
+        <form is="iron-form" method="get" action="/" id="basic" style="width: 450px;">
 
-             <paper-input name="sin" label="Social Insurance Number" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
-             <p>The Social Insurance Number must be a valid SIN number formatted the following way 111222333444555 (without dashes)</p>
+             <paper-input name="sin" label="Social Insurance Number" char-counter maxlength="15"></paper-input><br>
+             <p>If the driver is unknown, please leave this blank, it will be replaced with the primary owner of the vehicle.</p>
 
-             <paper-input name="name" label="Name" required char-counter maxlength="40" auto-validate pattern="[a-zZ-A]*" error-message="A name can only contain letters, dashes, and spaces."></paper-input>
+             <paper-input name="vehicle_id" label="Vehicle ID" required char-counter maxlength="15"></paper-input>
 
-             <paper-input name="vehicle_id" label="Vehicle ID" required char-counter maxlength="15" auto-validate pattern="[0-9]*" error-message="please only type numbers"></paper-input>
+             <paper-input name="office_no" label="Office Number" required char-counter maxlength="15"></paper-input>
 
-            <paper-input name="price" label="Price" type="number" required>
-            <div prefix>$&nbsp;</div>
-            </paper-input>
+             <paper-input name="vtype" label="Violation Type" required char-counter maxlength="10"></paper-input>
 
-             <br>
+             <paper-input name="place" label="Location" required char-counter maxlength="20"></paper-input>
 
-             <paper-checkbox name="today_date" value="yes" required>Did the transaction occur today?</paper-checkbox><br>
+             <paper-textarea name="description" label="Description" required char-counter maxlength="1024"></paper-textarea>
 
-             <paper-input name="s_date" label="Date"></paper-input><br>
+             <paper-input name="s_date" label="Date"></paper-input>
+             <p>Please use the following format, yyyy-mm-dd. Please add the hyphens.</p><br>
 
              <paper-button raised onclick="_submit(event)">Submit</paper-button>
              <paper-button raised onclick="_reset(event)">Reset</paper-button>
@@ -26,17 +25,24 @@
         </form>
 
         <script>
-            function _submit(event) {
-            Polymer.dom(event).localTarget.parentElement.submit();
-            }
-            function _reset(event) {
-            var form = Polymer.dom(event).localTarget.parentElement
-            form.reset();
-            form.querySelector('.output').innerHTML = '';
-            }
-            basic.addEventListener('iron-form-submit', function(event) {
-            this.querySelector('.output').innerHTML = JSON.stringify(event.detail);
-            });
+        	function _submit(event) {
+        		Polymer.dom(event).localTarget.parentElement.submit();
+       		}
+        	function _reset(event) {
+        		var form = Polymer.dom(event).localTarget.parentElement
+         		form.reset();
+         		form.querySelector('.output').innerHTML = '';
+        	}
+        	basic.addEventListener('iron-form-submit', function(event) {
+  			var myRequest = new XMLHttpRequest();
+  			myRequest.onreadystatechange = function() {
+       				if (myRequest.readyState == 4 && myRequest.status == 200) {
+    					document.getElementsByClassName('output')[0].innerHTML = myRequest.responseText;
+				}
+       			};
+  			myRequest.open("GET", "/cgi-bin/Violation-Record.cgi?"+"sin="+document.getElementsByName("sin")[0].value+"&"+"office_no="+document.getElementsByName("office_no")[0].value+"&"+"vehicle_id="+document.getElementsByName("vehicle_id")[0].value+"&"+"vtype="+document.getElementsByName("vtype")[0].value+"&"+"s_date="+document.getElementsByName("s_date")[0].value+"&"+"place="+document.getElementsByName("place")[0].value+"&"+"description="+document.getElementsByName("description")[0].value);
+  			myRequest.send();
+        	});
         </script>
 
     </div>

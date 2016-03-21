@@ -1,35 +1,24 @@
-#!/usr/bin/python
-# -*- coding: UTF-8 -*-
+#!/usr/bin/env python
 
-# enable debugging
-import cgitb, Cookie, os, cgi
-cgitb.enable()
+import Cookie
 
-form = cgi.FieldStorage()
+import cgi
 
-import cx_Oracle
-
-# create the cookie
+# set the cookie to expire
 c=Cookie.SimpleCookie()
-variable = ""
-value = ""
-for key in form.keys():
-        variable = str(key)
-        value = str(form.getvalue(variable))
-        # assign a value
-	c[variable]=value
-	# set the xpires time
-	c[variable]['expires']=1*1*3*60*60*60*1000
 
-# print the header, starting with the cookie
+c['user']=''
+c['password']=''
+c['user']['expires']='Thu, 01 Jan 1970 00:00:00 GMT'
+c['user']['expires']='Thu, 01 Jan 1970 00:00:00 GMT'
+
+# print the HTTP header
 print c
-print "Content-type: text/html\n"
-print ""
-print ""
+print "Content-type: text/html\n\n"
 print '''
 <html>
 <head>
-    <title>Login - Error</title>
+    <title>Logout Success</title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -157,21 +146,14 @@ print '''
        </style>
  </head>
 	<body style="margin-left: -242px; padding-left: 50%;">
-'''
-try:
-	db = cx_Oracle.connect(form["user"].value+'/'+form["password"].value+'@localhost:61234/CRS')
-	print '''	    <script>
-				window.location.href = "../index.php"
-			    </script>'''
-except:
-	print '''
-    <paper-card image="/UAlberta.png">
-		<div class="card-content">
-			<p>Invalid login information. Please go back and try again.</p>
-            		<a href="../index.html"><paper-button raised>Back to Login</paper-button></a>
-		</div>
-	</paper-card>
 
-	</body>
+<paper-card image="../UAlberta.png">
+    <div class="card-content">
+        <p>You have been logged out. Please return to the login page or close this tab.</p>
+        <a href="../index.html"><paper-button raised>Back to Login</paper-button></a>
+    </div>
+</paper-card>
+
+</body>
 </html>
 '''

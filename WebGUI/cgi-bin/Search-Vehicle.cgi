@@ -84,22 +84,78 @@ class LengthError(Exception):
 	def __init__(self):
 		pass
 
+class NoSerialError(Exception):
+	def __init__(self):
+		pass
+
 class NoResultsError(Exception):
 	def __init__(self):
 		pass
 
+def PrintResult1(result):
+	print '''<table class="table">'''
+	print '''
+	<tr>
+		<th>Transaction ID</th>
+		<th>Seller</th>
+		<th>Buyer</th>
+		<th>Vehicle</th>
+		<th>Date</th>
+		<th>Price</th>
+	</tr>
+	'''
+	for row in result:
+		print "<tr>"
+		for item in row:
+			print "<td>"+str(item)+"</td>"
+		print "</tr>"
+	print "</table>"
+
+def PrintResult2(result):
+	print '''<table class="table">'''
+	print '''
+	<tr>
+		<th>Ticket Number</th>
+		<th>Violator Number</th>
+		<th>Vehicle ID</th>
+		<th>Office Number</th>
+		<th>Violation Type</th>
+		<th>Violation Date</th>
+		<th>Place</th>
+		<th>Description</th>
+		<th>Fine</th>
+	</tr>
+	'''
+	for row in result:
+		print "<tr>"
+		for item in row:
+			print "<td>"+str(item)+"</td>"
+		print "</tr>"
+	print "</table>"
+
+def PrintResult3(result):
+	print '''<table class="table">'''
+	print '''
+	<tr>
+		<th>Number of Transactions</th>
+		<th>Average Price</th>
+		<th>Number of Violations</th>
+	</tr>
+	'''
+	print "<tr>"
+	for item in result:
+		print "<td><p>"+str(item)+"</p></td>"
+
+	print "</tr>"
+	print "</table>"
+
 def SendToOracle(sql):
-	c=Cookie.SimpleCookie()
-	if 'HTTP_COOKIE' in os.environ:
+	c = Cookie.SimpleCookie()
+ 	if 'HTTP_COOKIE' in os.environ:
 		c.load(os.environ['HTTP_COOKIE'])
+
 	try:
 		db = cx_Oracle.connect(c["user"].value+'/'+c["password"].value+'@localhost:61234/CRS')
-		cur = db.cursor()
-		cur.execute(sql)
-		result = cur.fetchall()
-		cur.close()
-		db.close()
-		return result
 	except:
 		print '''
 		<paper-material elevation="2">
@@ -112,29 +168,82 @@ def SendToOracle(sql):
 	</body>
 	</html>
 		'''
+	cur = db.cursor()
+	cur.execute(sql)
+	result = cur.fetchall()
+	cur.close()
+	db.close()
+	return result
 
-def PrintResults(result):
-	print '''<table class="table">'''
-	print '''
-	<tr>
-		<th>Name</th>
-		<th>Address</th>
-		<th>Birthday</th>
-		<th>Licence Number</th>
-		<th>Class</th>
-		<th>Description of Restriction</th>
-		<th>Expiring Data</th>
-	</tr>
-	'''
-	for row in result:
-		print "<tr>"
-		for item in row:
-			print "<td>"+str(item)+"</td>"
-		print "</tr>"
-	print "</table>"
-	print '''<a href="http://vfrunza.ca/index.php?page=Search"><paper-button raised>Back</paper-button></a>'''
+def SerialValidation(serial):
+	if len(str(serial)) != 15:
+		raise LengthError
 
+	serial = "'"+str(serial)+"'"
+	serial_SQL = "SELECT * FROM vehicle v WHERE UPPER(v.serial_no) = "+serial.upper()
+	result = SendToOracle(serial_SQL)
+	if result == []:
+		raise NoSerialError
+
+def SerialSQL1(serial):
+	serial = "'"+serial+"'"
+	serial_SQL = "SELECT * FROM auto_sale a WHERE UPPER(a.vehicle_id) = "+serial.upper()
+	result = SendToOracle(serial_SQL)
+	if result == []:
+		result = [['None', 'None', 'None', 'None', 'None', 'None']]
+	PrintResult1(result)
+
+def SerialSQL2(serial):
+	serial = "'"+serial+"'"
+	serial_SQL = "SELECT t.ticket_no, t.violator_no, t.vehicle_id, t.office_no, t.vtype, t.vdate, t.place, t.descriptions, tt.fine FROM vehicle v, ticket t, ticket_type tt WHERE UPPER(v.serial_no) = "+serial.upper()+" AND v.serial_no = t.vehicle_id AND t.vtype=tt.vtype"
+	result = SendToOracle(serial_SQL)
+
+	if result == []:
+		result = [['None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None']]
+	PrintResult2(result)
+
+def SerialSQL3(serial):
+	serial_stats = []
+	serial = "'"+serial+"'"
+	serial_SQL = "SELECT COUNT(a.vehicle_id) FROM auto_sale a WHERE UPPER(a.vehicle_id) = "+serial.upper()
+	result = SendToOracle(serial_SQL)
+
+	if result == None:
+		result = '0'
+		serial_stats.append(result)
+	else:
+		serial_stats.append(result[0][0])
+
+	serial_SQL = "SELECT AVG(a.price) FROM auto_sale a WHERE UPPER(a.vehicle_id) = "+serial.upper()+" GROUP BY a.price"
+	result = SendToOracle(serial_SQL)
+
+	if result == []:
+		result = 'None'
+		serial_stats.append(result)
+	else:
+		serial_stats.append(result[0][0])
+
+	serial_SQL = "SELECT COUNT(t.ticket_no) FROM vehicle v, ticket t WHERE UPPER(v.serial_no) = "+serial.upper()+" AND v.serial_no = t.vehicle_id"
+	result = SendToOracle(serial_SQL)
+
+	if result == None:
+		result = '0'
+		serial_stats.append(result)
+	else:
+		serial_stats.append(result[0][0])
+
+	PrintResult3(serial_stats)
+
+try:
+	form = cgi.FieldStorage()
+	serial = form.getvalue("serial").upper()
+
+	SerialValidation(serial)
+	SerialSQL3(serial)
+	SerialSQL1(serial)
+	SerialSQL2(serial)
 	print '''
+		<a href="http://vfrunza.ca/index.php?page=Search"><paper-button raised>Back</paper-button></a>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script src="../js/bootstrap.min.js"></script>
@@ -142,91 +251,30 @@ def PrintResults(result):
 		</html>
 		'''
 
-
-def LicenceSQL(licence_no):
-	licence_SQL = "SELECT DISTINCT p.name, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date FROM people p, drive_licence l LEFT OUTER JOIN restriction r ON r.licence_no=l.licence_no LEFT OUTER JOIN driving_condition c ON c.c_id=r.r_id WHERE UPPER(l.licence_no) = "+str(licence_no.upper())+" AND l.sin = p.sin"
-	return licence_SQL
-
-def NameSQL(name):
-	name = "'"+name+"'"
-	name_SQL = "SELECT DISTINCT p.name, l.licence_no, p.addr, p.birthday, l.class, c.description, l.expiring_date FROM people p, drive_licence l LEFT OUTER JOIN restriction r ON r.licence_no=l.licence_no LEFT OUTER JOIN driving_condition c ON c.c_id=r.r_id WHERE UPPER(p.name) = "+name.upper()+" AND l.sin = p.sin"
-	return name_SQL
-
-
-def LicenceValidation(licence_no):
-	if len(str(licence_no)) != 15:
-		raise LengthError
-
-try:
-	form = cgi.FieldStorage()
-
-	licence_no = form.getvalue("licence_no")
-	name = form.getvalue("name")
-
-	if name == None:
-		LicenceValidation(licence_no)
-		result = LicenceSQL(licence_no)
-		result = SendToOracle(result)
-		if result == []:
-			raise NoResultsError
-		PrintResults(result)
-
-	if licence_no == None:
-		result = NameSQL(name)
-		result = SendToOracle(result)
-		if result == []:
-			raise NoResultsError
-		PrintResults(result)
+except NoSerialError:
+	print '''
+	<paper-material elevation="2">
+	<div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; padding-left: 20px;">
+		<h2>No Serial Number Exists</h2>
+		<p>That serial number does not exisit. Please try again.</p>
+		<br>
+		<a href="http://vfrunza.ca/index.php?page=Search"><paper-button raised>Back</paper-button></a>
+	</paper-material>
+</body>
+</html>
+	'''
 
 except LengthError:
 	print '''
 	<paper-material elevation="2">
 	<div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; padding-left: 20px;">
-		<h2>Invalid Licence Number</h2>
-		<p>The licence number you entered was not 15 digits long. Please type one 15 digit number without spaces or dashes. Please Try again.</p>
+		<h2>Invalid Serial Number</h2>
+		<p>The Serial number you entered was not 15 digits long. Please type one 15 digit number without spaces or dashes. Please Try again.</p>
 		<br>
 		<a href="http://vfrunza.ca/index.php?page=Search"><paper-button raised>Back</paper-button></a>
 	</paper-material>
 </body>
 </html>
 	'''
-
-except NoResultsError:
-	print '''
-	<paper-material elevation="2">
-	<div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; padding-left: 20px;">
-		<h2>No Results</h2>
-		<p>Your search returned no results. Please review your query for any errors that would lead in no results.</p>
-		<br>
-		<a href="http://vfrunza.ca/index.php?page=Search"><paper-button raised>Back</paper-button></a>
-	</paper-material>
-</body>
-</html>
-	'''
-
-
-except ValueError:
-	print '''
-	<paper-material elevation="2">
-	<div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; padding-left: 20px;">
-		<h2>Invalid Lincence Number</h2>
-		<p>The licence number you entered was not made of only numbers. Please type one 15 digit number without spaces or dashes. Please Try again.</p>
-		<br>
-		<a href="http://vfrunza.ca/index.php?page=Search"><paper-button raised>Back</paper-button></a>
-	</paper-material>
-</body>
-</html>
-	'''
-except:
-	print '''
-	<paper-material elevation="2">
-	<div style="padding-top: 20px; padding-bottom: 20px; padding-right: 20px; padding-left: 20px;">
-		<h2>Database Error</h2>
-		<p>An unexpected error occured. Please try again.</p>
-		<br>
-		<a href="http://vfrunza.ca/index.php?page=Search"><paper-button raised>Back</paper-button></a>
-	</paper-material>
-
-</body>
-</html>
-	'''
+#except:
+	#print "failed"
